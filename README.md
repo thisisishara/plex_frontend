@@ -14,9 +14,7 @@ If you cannot find a `.env` in the root dir, please create one with the followin
 ```.env
 # the Base URL of backend API. Make sure you have the same 
 # port configured for the backend in the backend .env file
-# Since this configured to run on Docker, service name is 
-# specified instead of localhost or any other domain.
-NEXT_PUBLIC_BACKEND_BASE_URL=http://plexapi:8000
+NEXT_PUBLIC_BACKEND_BASE_URL=http://localhost:8000
 ```
 
 - Once the env is created, go one level up and simply run `docker compose up -d` to run the frontend and backend services
