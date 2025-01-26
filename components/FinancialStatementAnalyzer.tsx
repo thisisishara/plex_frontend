@@ -37,7 +37,7 @@ export default function FinancialStatementAnalyzer() {
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationResult, setEvaluationResult] = useState<object | null>(null);
 
-  const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:8000";
+  const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://plexapi:8000";
 
   const fetchAvailableReports = async () => {
     try {
