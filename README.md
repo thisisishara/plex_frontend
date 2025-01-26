@@ -12,9 +12,6 @@ Before deploying, make sure the `.env` file is properly configured in the fronte
 If you cannot find a `.env` in the root dir, please create one with the following variables.
 
 ```.env
-# the intended port for the frontend
-PLEX_APP_PORT=3000 
-
 # the Base URL of backend API. Make sure you have the same 
 # port configured for the backend in the backend .env file
 # Since this configured to run on Docker, service name is 
