@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { UploadCloud, Download, Loader2, SquareDashedMousePointer, CopyCheck, Flame, CornerDownRight } from "lucide-react"
+import { UploadCloud, Download, Loader2, SquareDashedMousePointer, Flame, CornerDownRight } from "lucide-react"
 import axios from "axios"
 import { toast } from "sonner"
 import ReactMarkdown from 'react-markdown'
@@ -35,7 +35,7 @@ export default function FinancialStatementAnalyzer() {
   const referenceFileInputRef = useRef<HTMLInputElement>(null);
   const [referenceFile, setReferenceFile] = useState<File | null>(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
-  const [evaluationResult, setEvaluationResult] = useState<any>(null);
+  const [evaluationResult, setEvaluationResult] = useState<object | null>(null);
 
   const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:8000";
 
@@ -44,13 +44,14 @@ export default function FinancialStatementAnalyzer() {
       const response = await axios.get(`${backendBaseUrl}/api/v1/sources/names`);
       setAvailableReports(response.data?.sources || []);
     } catch (error) {
+      console.debug(error);
       toast.error("Failed to retrieve available reports. Please upload a new report to get started!");
     }
   };
 
   useEffect(() => {
     fetchAvailableReports();
-  }, []);
+  });
 
   const clearFileInput = () => {
     setSelectedFile(null);
@@ -155,15 +156,13 @@ export default function FinancialStatementAnalyzer() {
     }
   }
 
-  const escapeValue = (value: any) => {
-    if (typeof value !== "string") {
-      value = String(value);
-    }
+  const escapeValue = (value: string | number) => {
+    const stringValue = typeof value !== "string" ? String(value) : value;
 
-    if (/[,"\n]/.test(value)) {
-      return `"${value.replace(/"/g, '""')}"`;
+    if (/[,"\n]/.test(stringValue)) {
+      return `"${stringValue.replace(/"/g, '""')}"`;
     }
-    return value;
+    return stringValue;
   };
 
   const handleDownloadCSV = () => {
