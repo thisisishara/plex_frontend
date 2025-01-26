@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Profit and Loss Extractor Frontend
+## Tech stack:
+- NextJS 14
+- Node/NPM
+- Shadcn/ui
+- Docker
 
-## Getting Started
+## How to Deploy
+Instead of deploying the frontend alone, you should use the given docker-compose.yml file in the root dir where both frontend and backend directories are found. (One level up than this README file) to run both frontend and backend together.
 
-First, run the development server:
+Before deploying, make sure the `.env` file is properly configured in the frontend project root directory.
+If you cannot find a `.env` in the root dir, please create one with the following variables.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```.env
+# the intended port for the frontend
+PLEX_APP_PORT=3000 
+
+# the Base URL of backend API. Make sure you have the same 
+# port configured for the backend in the backend .env file
+# Since this configured to run on Docker, service name is 
+# specified instead of localhost or any other domain.
+NEXT_PUBLIC_BACKEND_BASE_URL=http://plexapi:8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Once the env is created, go one level up and simply run `docker compose up -d` to run the frontend and backend services
+- You can find the primary README file in the project root, one level up.
