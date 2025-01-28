@@ -11,6 +11,7 @@ RUN npm install --frozen-lockfile
 COPY . .
 
 ENV NEXT_PUBLIC_BACKEND_BASE_URL=${NEXT_PUBLIC_BACKEND_BASE_URL}
+ENV PORT=3000
 
 RUN npm run build
 

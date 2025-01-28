@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -14,6 +14,8 @@ import { toast } from "sonner"
 import ReactMarkdown from 'react-markdown'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 
+
+const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:8000";
 
 export default function FinancialStatementAnalyzer() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -37,9 +39,7 @@ export default function FinancialStatementAnalyzer() {
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationResult, setEvaluationResult] = useState<object | null>(null);
 
-  const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://plexapi:8000";
-
-  const fetchAvailableReports = async () => {
+  const fetchAvailableReports = useCallback(async () => {
     try {
       const response = await axios.get(`${backendBaseUrl}/api/v1/sources/names`);
       setAvailableReports(response.data?.sources || []);
@@ -47,11 +47,11 @@ export default function FinancialStatementAnalyzer() {
       console.debug(error);
       toast.error("Failed to retrieve available reports. Please upload a new report to get started!");
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAvailableReports();
-  });
+  }, [fetchAvailableReports]);
 
   const clearFileInput = () => {
     setSelectedFile(null);
